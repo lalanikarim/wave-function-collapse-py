@@ -38,6 +38,23 @@ class WaveFunctionCollapse:
         self.stack = []
 
     # add a new function optimize, that replaces any tile that is surrounded by a tile of other type in all four directions, with the other type tile. AI!
+    def optimize(self, y, x):
+        directions = ['up', 'down', 'left', 'right']
+        surrounding_tiles = set()
+
+        for direction in directions:
+            ny, nx = self.get_neighbor(y, x, direction)
+            if 0 <= ny < self.height and 0 <= nx < self.width:
+                possible_tiles = np.flatnonzero(self.wave[ny, nx])
+                if len(possible_tiles) == 1:
+                    surrounding_tiles.add(list(self.constraints.keys())[possible_tiles[0]])
+
+        if len(surrounding_tiles) == 1:
+            new_tile_name = surrounding_tiles.pop()
+            tile_idx = list(self.constraints.keys()).index(new_tile_name)
+            self.collapse(y, x, tile_idx)
+            self.optimize(y, x)
+
     def observe(self):
         while True:
             min_entropy = float('inf')
