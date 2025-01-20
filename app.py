@@ -21,17 +21,15 @@ COLORS = {
     'mud': (255, 69, 0)     # Orange
 }
 
-# expand tile_constraints to also include optional maximum length as part of the constraints. AI!
-
 # Define the constraints
 tile_constraints = {
-    'deep_water': ['deep_water', 'water'],
-    'water': ['water', 'sand', 'deep_water'],
-    'sand': ['water', 'rock'],
-    'rock': ['sand', 'grass'],
-    'grass': ['rock', 'tree'],
-    'tree': ['grass','mud'],
-    'mud': ['mud','grass', 'tree']
+    'deep_water': {'neighbors': ['deep_water', 'water']},
+    'water': {'neighbors': ['water', 'sand', 'deep_water'], 'max_length': 5},
+    'sand': {'neighbors': ['water', 'rock']},
+    'rock': {'neighbors': ['sand', 'grass']},
+    'grass': {'neighbors': ['rock', 'tree']},
+    'tree': {'neighbors': ['grass', 'mud']},
+    'mud': {'neighbors': ['mud', 'grass', 'tree']}
 }
 
 # Wave Function Collapse Class
