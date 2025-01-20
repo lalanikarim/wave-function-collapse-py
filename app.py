@@ -7,12 +7,13 @@ pygame.init()
 
 # Define constants
 WIDTH, HEIGHT = 800, 800
-GRID_WIDTH, GRID_HEIGHT = 50, 50
+GRID_WIDTH, GRID_HEIGHT = 20, 20
 TILE_SIZE = WIDTH // GRID_WIDTH
 
 # Colors for each tile
 COLORS = {
-    'water': (0, 0, 255),   # Blue
+    # add 'deep_water' with color blue AI!
+    'water': (0, 0, 255),   # Blue # make this color light blue AI!
     'sand': (243, 196, 89), # Light Brown
     'rock': (139, 137, 137),# Gray
     'grass': (34, 139, 34), # Green
@@ -20,13 +21,18 @@ COLORS = {
     'mud': (165, 42, 42)     # Brown
 }
 
+# add constraints as follows AI!
+# deep_water can be next to deep_water and water
+# water can also be next to deep_water
+
 # Define the constraints
 tile_constraints = {
     'water': ['water', 'sand'],
     'sand': ['water', 'rock'],
     'rock': ['sand', 'grass'],
     'grass': ['rock', 'tree'],
-    'tree': ['grass']
+    'tree': ['grass','mud'],
+    'mud': ['mud','grass', 'tree']
 }
 
 # Wave Function Collapse Class
