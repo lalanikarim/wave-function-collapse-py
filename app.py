@@ -22,11 +22,11 @@ COLORS = {
 # collapse the tile_constraints to just be { 'tile': ['tile','tile']} format. AI!
 # Define the constraints
 tile_constraints = {
-    'water': ['water', 'sand'],
-    'sand': ['water', 'rock'],
-    'rock': ['sand', 'grass'],
-    'grass': ['rock', 'tree'],
-    'tree': ['grass']
+    'water': {'up': ['water', 'sand'], 'down': ['water', 'sand'], 'left': ['water', 'sand'], 'right': ['water', 'sand']},
+    'sand': {'up': ['water', 'rock'], 'down': ['water', 'rock'], 'left': ['water', 'rock'], 'right': ['water', 'rock']},
+    'rock': {'up': ['sand', 'grass'], 'down': ['sand', 'grass'], 'left': ['sand', 'grass'], 'right': ['sand', 'grass']},
+    'grass': {'up': ['rock', 'tree'], 'down': ['rock', 'tree'], 'left': ['rock', 'tree'], 'right': ['rock', 'tree']},
+    'tree': {'up': ['grass'], 'down': ['grass'], 'left': ['grass'], 'right': ['grass']}
 }
 
 # Wave Function Collapse Class
