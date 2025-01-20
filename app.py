@@ -66,6 +66,7 @@ class WaveFunctionCollapse:
         self.wave[y, x, tile_idx] = True
         self.stack.append((y, x))
         self.propagate()
+        # add a new function optimize, that replaces any tile that is surrounded by a tile of other type in all four directions, with the other tile. AI!
 
     def propagate(self):
         while self.stack:
