@@ -12,8 +12,8 @@ TILE_SIZE = WIDTH // GRID_WIDTH
 
 # Colors for each tile
 COLORS = {
-    # add 'deep_water' with color blue AI!
-    'water': (0, 0, 255),   # Blue # make this color light blue AI!
+    'deep_water': (0, 0, 139), # Blue
+    'water': (173, 216, 230),   # Light Blue
     'sand': (243, 196, 89), # Light Brown
     'rock': (139, 137, 137),# Gray
     'grass': (34, 139, 34), # Green
@@ -21,13 +21,10 @@ COLORS = {
     'mud': (165, 42, 42)     # Brown
 }
 
-# add constraints as follows AI!
-# deep_water can be next to deep_water and water
-# water can also be next to deep_water
-
 # Define the constraints
 tile_constraints = {
-    'water': ['water', 'sand'],
+    'deep_water': ['deep_water', 'water'],
+    'water': ['water', 'sand', 'deep_water'],
     'sand': ['water', 'rock'],
     'rock': ['sand', 'grass'],
     'grass': ['rock', 'tree'],
