@@ -7,7 +7,7 @@ pygame.init()
 
 # Define constants
 WIDTH, HEIGHT = 800, 800
-GRID_WIDTH, GRID_HEIGHT = 10, 10
+GRID_WIDTH, GRID_HEIGHT = 50, 50
 TILE_SIZE = WIDTH // GRID_WIDTH
 
 # Colors for each tile
@@ -16,7 +16,8 @@ COLORS = {
     'sand': (243, 196, 89), # Light Brown
     'rock': (139, 137, 137),# Gray
     'grass': (34, 139, 34), # Green
-    'tree': (34, 102, 34)   # Darker Green
+    'tree': (34, 102, 34),   # Darker Green
+    # add 'mud' and give it the color brown. AI!
 }
 
 # Define the constraints
