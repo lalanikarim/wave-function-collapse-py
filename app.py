@@ -109,10 +109,29 @@ class WaveFunctionCollapse:
         return output_grid
 
     def optimize(self):
-        # loop through the grid. AI!
-        # if you find a tile, say tile_a, surrounded by another tile, say tile_b, on all four sides,
-        # then replaced this tile_a with tile_b
-        pass
+        for y in range(self.height):
+            for x in range(self.width):
+                possible_tiles = np.flatnonzero(self.wave[y, x])
+                if len(possible_tiles) == 1:
+                    current_tile_idx = possible_tiles[0]
+                    current_tile = list(self.constraints.keys())[current_tile_idx]
+                    neighbors = [
+                        self.get_neighbor(y, x, 'up'),
+                        self.get_neighbor(y, x, 'down'),
+                        self.get_neighbor(y, x, 'left'),
+                        self.get_neighbor(y, x, 'right')
+                    ]
+                    surrounding_tiles = set()
+                    for ny, nx in neighbors:
+                        if 0 <= ny < self.height and 0 <= nx < self.width:
+                            possible_surrounding_tiles = np.flatnonzero(self.wave[ny, nx])
+                            if len(possible_surrounding_tiles) == 1:
+                                surrounding_tiles.add(list(self.constraints.keys())[possible_surrounding_tiles[0]])
+                    if len(surrounding_tiles) == 1 and current_tile not in surrounding_tiles:
+                        new_tile = list(surrounding_tiles)[0]
+                        new_tile_idx = list(self.constraints.keys()).index(new_tile)
+                        self.wave[y, x] = False
+                        self.wave[y, x, new_tile_idx] = True
 
 # Create and observe the wave function collapse
 wfc = WaveFunctionCollapse(GRID_WIDTH, GRID_HEIGHT, tile_constraints)
