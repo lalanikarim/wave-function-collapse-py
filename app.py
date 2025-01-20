@@ -108,9 +108,16 @@ class WaveFunctionCollapse:
             output_grid.append(row)
         return output_grid
 
+    def optimize(self):
+        # loop through the grid. AI!
+        # if you find a tile, say tile_a, surrounded by another tile, say tile_b, on all four sides,
+        # then replaced this tile_a with tile_b
+        pass
+
 # Create and observe the wave function collapse
 wfc = WaveFunctionCollapse(GRID_WIDTH, GRID_HEIGHT, tile_constraints)
 wfc.observe()
+wfc.optimize()
 output_grid = wfc.get_output_grid()
 
 # Set up the display
