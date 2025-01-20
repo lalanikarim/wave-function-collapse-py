@@ -18,7 +18,7 @@ COLORS = {
     'rock': (139, 137, 137),# Gray
     'grass': (34, 139, 34), # Green
     'tree': (34, 102, 34),   # Darker Green
-    'mud': (165, 42, 42)     # Brown
+    'mud': (165, 42, 42)     # Brown # change this to orange. AI!
 }
 
 # Define the constraints
