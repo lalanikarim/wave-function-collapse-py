@@ -71,6 +71,7 @@ class WaveFunctionCollapse:
         self.stack.append((y, x))
         self.propagate()
 
+    # incorporate tile_constraints.neighbors for neighboring tiles and optional max_length AI!
     def propagate(self):
         while self.stack:
             y, x = self.stack.pop()
