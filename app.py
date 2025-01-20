@@ -21,6 +21,8 @@ COLORS = {
     'mud': (255, 69, 0)     # Orange
 }
 
+# expand tile_constraints to also include optional maximum length as part of the constraints. AI!
+
 # Define the constraints
 tile_constraints = {
     'deep_water': ['deep_water', 'water'],
