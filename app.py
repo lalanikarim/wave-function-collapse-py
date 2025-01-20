@@ -36,8 +36,6 @@ class WaveFunctionCollapse:
         self.constraints = constraints
         self.wave = np.ones((height, width, len(constraints)), dtype=bool)
         self.stack = []
-
-    # add a new function optimize, that replaces any tile that is surrounded by a tile of other type in all four directions, with the other type tile. AI!
     def optimize(self, y, x):
         directions = ['up', 'down', 'left', 'right']
         surrounding_tiles = set()
