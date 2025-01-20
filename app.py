@@ -76,7 +76,7 @@ class WaveFunctionCollapse:
                     current_tile_idx = np.flatnonzero(self.wave[y, x])
                     if len(current_tile_idx) == 1:
                         current_tile = list(self.constraints.keys())[current_tile_idx[0]]
-                        valid_neighbors = set(self.constraints[current_tile])
+                        valid_neighbors = set(self.constraints[current_tile][direction])
                         for tile_name in self.constraints:
                             tile_idx = list(self.constraints.keys()).index(tile_name)
                             if tile_name not in valid_neighbors:
