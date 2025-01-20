@@ -7,7 +7,7 @@ pygame.init()
 
 # Define constants
 WIDTH, HEIGHT = 800, 800
-GRID_WIDTH, GRID_HEIGHT = 50, 50
+GRID_WIDTH, GRID_HEIGHT = 10, 10
 TILE_SIZE = WIDTH // GRID_WIDTH
 
 # Colors for each tile
