@@ -19,6 +19,7 @@ COLORS = {
     'tree': (34, 102, 34)   # Darker Green
 }
 
+# collapse the tile_constraints to just be { 'tile': ['tile','tile']} format. AI!
 # Define the constraints
 tile_constraints = {
     'water': {'up': ['water', 'sand'], 'down': ['water', 'sand'], 'left': ['water', 'sand'], 'right': ['water', 'sand']},
