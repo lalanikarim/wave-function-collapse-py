@@ -7,7 +7,7 @@ pygame.init()
 
 # Define constants
 WIDTH, HEIGHT = 800, 800
-GRID_WIDTH, GRID_HEIGHT = 20, 20
+GRID_WIDTH, GRID_HEIGHT = 50, 50
 TILE_SIZE = WIDTH // GRID_WIDTH
 
 # Colors for each tile
@@ -15,7 +15,7 @@ COLORS = {
     'deep_water': (0, 0, 139), # Blue
     'water': (173, 216, 230),   # Light Blue
     'sand': (243, 196, 89), # Light Brown
-    'rock': (139, 137, 137),# Gray
+    # 'rock': (139, 137, 137),# Gray
     'grass': (34, 139, 34), # Green
     'tree': (34, 102, 34),   # Darker Green
     'mud': (255, 69, 0)     # Orange
@@ -23,13 +23,15 @@ COLORS = {
 
 # Define the constraints
 tile_constraints = {
-    'deep_water': {'neighbors': ['deep_water', 'water']},
-    'water': {'neighbors': ['water', 'sand', 'deep_water'], 'max_length': 5},
-    'sand': {'neighbors': ['water', 'rock']},
-    'rock': {'neighbors': ['sand', 'grass']},
-    'grass': {'neighbors': ['rock', 'tree']},
-    'tree': {'neighbors': ['grass', 'mud']},
-    'mud': {'neighbors': ['mud', 'grass', 'tree']}
+    'deep_water': ['deep_water', 'water'],
+    'water': ['water', 'sand', 'deep_water'],
+    # 'sand': ['water', 'rock'],
+    # 'rock': ['sand', 'grass'],
+    # 'grass': ['rock', 'tree'],
+    'sand': ['water', 'grass'],
+    'grass': ['mud', 'tree', 'sand'],
+    'tree': ['grass', 'mud'],
+    'mud': ['mud', 'grass', 'tree']
 }
 
 # Wave Function Collapse Class
@@ -71,7 +73,6 @@ class WaveFunctionCollapse:
         self.stack.append((y, x))
         self.propagate()
 
-    # incorporate tile_constraints.neighbors for neighboring tiles and optional max_length AI!
     def propagate(self):
         while self.stack:
             y, x = self.stack.pop()
@@ -141,7 +142,7 @@ class WaveFunctionCollapse:
 # Create and observe the wave function collapse
 wfc = WaveFunctionCollapse(GRID_WIDTH, GRID_HEIGHT, tile_constraints)
 wfc.observe()
-wfc.optimize()
+# wfc.optimize()
 output_grid = wfc.get_output_grid()
 
 # Set up the display
