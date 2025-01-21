@@ -14,20 +14,16 @@ TILE_SIZE = WIDTH // GRID_WIDTH
 COLORS = {
     'deep_water': (0, 0, 139), # Blue
     'water': (173, 216, 230),   # Light Blue
-    'sand': (243, 196, 89), # Light Brown
-    # 'rock': (139, 137, 137),# Gray
-    'grass': (34, 139, 34), # Green
-    'tree': (34, 102, 34),   # Darker Green
-    'mud': (255, 69, 0)     # Orange
+    'sand': (243, 196, 89),     # Light Brown
+    'grass': (34, 139, 34),     # Green
+    'tree': (34, 102, 34),      # Darker Green
+    'mud': (255, 69, 0)         # Orange
 }
 
 # Define the constraints
 tile_constraints = {
     'deep_water': ['deep_water', 'water'],
     'water': ['water', 'sand', 'deep_water'],
-    # 'sand': ['water', 'rock'],
-    # 'rock': ['sand', 'grass'],
-    # 'grass': ['rock', 'tree'],
     'sand': ['water', 'grass'],
     'grass': ['mud', 'tree', 'sand'],
     'tree': ['grass', 'mud'],
@@ -40,6 +36,7 @@ class WaveFunctionCollapse:
         self.width = width
         self.height = height
         self.constraints = constraints
+        self.tile_names = list(constraints.keys())
         self.wave = np.ones((height, width, len(constraints)), dtype=bool)
         self.stack = []
 
@@ -81,16 +78,15 @@ class WaveFunctionCollapse:
                 if 0 <= ny < self.height and 0 <= nx < self.width:
                     current_tile_idx = np.flatnonzero(self.wave[y, x])
                     if len(current_tile_idx) == 1:
-                        current_tile = list(self.constraints.keys())[current_tile_idx[0]]
+                        current_tile = self.tile_names[current_tile_idx[0]]
                         valid_neighbors = set(self.constraints[current_tile])
-                        for tile_name in self.constraints:
-                            tile_idx = list(self.constraints.keys()).index(tile_name)
-                            if tile_name not in valid_neighbors:
-                                if self.wave[ny, nx, tile_idx]:
-                                    self.wave[ny, nx, tile_idx] = False
-                                    if np.sum(self.wave[ny, nx]) == 1:
-                                        new_tile_idx = np.flatnonzero(self.wave[ny, nx])
-                                        self.collapse(ny, nx, new_tile_idx[0])
+                        for tile_name in self.tile_names:
+                            tile_idx = self.tile_names.index(tile_name)
+                            if tile_name not in valid_neighbors and self.wave[ny, nx, tile_idx]:
+                                self.wave[ny, nx, tile_idx] = False
+                                if np.sum(self.wave[ny, nx]) == 1:
+                                    new_tile_idx = np.flatnonzero(self.wave[ny, nx])
+                                    self.collapse(ny, nx, new_tile_idx[0])
 
     def get_neighbor(self, y, x, direction):
         if direction == 'up':
@@ -110,7 +106,7 @@ class WaveFunctionCollapse:
                 possible_tiles = np.flatnonzero(self.wave[y, x])
                 if len(possible_tiles) != 1:
                     raise ValueError("Grid not fully collapsed!")
-                row.append(list(self.constraints.keys())[possible_tiles[0]])
+                row.append(self.tile_names[possible_tiles[0]])
             output_grid.append(row)
         return output_grid
 
@@ -120,7 +116,7 @@ class WaveFunctionCollapse:
                 possible_tiles = np.flatnonzero(self.wave[y, x])
                 if len(possible_tiles) == 1:
                     current_tile_idx = possible_tiles[0]
-                    current_tile = list(self.constraints.keys())[current_tile_idx]
+                    current_tile = self.tile_names[current_tile_idx]
                     neighbors = [
                         self.get_neighbor(y, x, 'up'),
                         self.get_neighbor(y, x, 'down'),
@@ -132,10 +128,10 @@ class WaveFunctionCollapse:
                         if 0 <= ny < self.height and 0 <= nx < self.width:
                             possible_surrounding_tiles = np.flatnonzero(self.wave[ny, nx])
                             if len(possible_surrounding_tiles) == 1:
-                                surrounding_tiles.add(list(self.constraints.keys())[possible_surrounding_tiles[0]])
+                                surrounding_tiles.add(self.tile_names[possible_surrounding_tiles[0]])
                     if len(surrounding_tiles) == 1 and current_tile not in surrounding_tiles:
                         new_tile = list(surrounding_tiles)[0]
-                        new_tile_idx = list(self.constraints.keys()).index(new_tile)
+                        new_tile_idx = self.tile_names.index(new_tile)
                         self.wave[y, x] = False
                         self.wave[y, x, new_tile_idx] = True
 
