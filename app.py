@@ -135,11 +135,18 @@ class WaveFunctionCollapse:
                         self.wave[y, x] = False
                         self.wave[y, x, new_tile_idx] = True
 
-# Create and observe the wave function collapse
-wfc = WaveFunctionCollapse(GRID_WIDTH, GRID_HEIGHT, tile_constraints)
-wfc.observe()
-wfc.optimize()
-output_grid = wfc.get_output_grid()
+# Create and observe the wave function collapse with retries
+max_retries = 5
+for attempt in range(max_retries):
+    try:
+        wfc = WaveFunctionCollapse(GRID_WIDTH, GRID_HEIGHT, tile_constraints)
+        wfc.observe()
+        wfc.optimize()
+        output_grid = wfc.get_output_grid()
+        break
+    except ValueError as e:
+        if attempt == max_retries - 1:
+            raise e
 
 # Set up the display
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
