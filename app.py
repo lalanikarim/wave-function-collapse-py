@@ -138,7 +138,7 @@ class WaveFunctionCollapse:
 # Create and observe the wave function collapse
 wfc = WaveFunctionCollapse(GRID_WIDTH, GRID_HEIGHT, tile_constraints)
 wfc.observe()
-# wfc.optimize()
+wfc.optimize()
 output_grid = wfc.get_output_grid()
 
 # Set up the display
